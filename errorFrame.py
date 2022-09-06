@@ -22,7 +22,7 @@ Created on Mon Aug  6 15:03:45 2018
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.ttk as ttk
-from tkinter.filedialog import askopenfilenames, asksaveasfile
+from tkinter.filedialog import askopenfilenames, asksaveasfile, asksaveasfilename
 import os, sys, threading, queue
 import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
@@ -311,7 +311,7 @@ class eF(tk.Frame):
                 self.plotButton.configure(state="normal")
                 self.plotButton.grid(column=0, row=6, pady=5, sticky="W")
                 self.loadToButton.configure(state="normal")
-                self.loadToButton.grid(column=0, row=6, pady=5, padx=226, sticky="W")
+                self.loadToButton.grid(column=0, row=6, pady=5, padx=172, sticky="W")
                 self.copyDetrend = self.detrendComboboxVariable.get()
                 self.copyWeighting = self.weightingComboboxVariable.get()
                 self.copyMA = self.movingAverageComboboxVariable.get()
@@ -598,13 +598,12 @@ class eF(tk.Frame):
                 stringToSave += "\n" + self.copyMA + " moving average"
                 
             defaultSaveName = "YourMeasurementMachine_errstrct" 
-            saveName = asksaveasfile(title="Save Error Structure", mode='w', defaultextension=".errstrct", initialfile=defaultSaveName, filetypes=[("Text file (*.errstrct)", ".errstrct")])
+            saveName = asksaveasfilename(title="Save Error Structure", defaultextension=".errstrct", initialfile=defaultSaveName, filetypes=[("Text file (*.errstrct)", ".errstrct")])
             directory = os.path.dirname(str(saveName))
             self.topGUI.setCurrentDirectory(directory)
-            if saveName is None:
-                return
-            saveName.write(stringToSave)
-            saveName.close()
+            with open(saveName, "w", encoding="utf-8") as f:
+                f.write(stringToSave)
+                f.close()
             self.saveResultsButton.configure(text="Saved")
             self.after(1000, lambda : self.saveResultsButton.configure(text="Save values and std. devs."))
         
@@ -833,7 +832,7 @@ class eF(tk.Frame):
         saveResultsButton_ttp = CreateToolTip(self.saveResultsButton, 'Save the result values and standard deviations as a *.errstrct')
         
         self.plotButton = ttk.Button(self, text="Plot", width=20, command=plotResiduals)
-        self.loadToButton = ttk.Button(self, text="Load values to Measurement and Custom Fitting Model Tabs", width=40, command=loadValues)
+        self.loadToButton = ttk.Button(self, text="Load values to Measurement and Custom Fitting Tabs", width=50, command=loadValues)
 
         plot_ttp = CreateToolTip(self.plotButton, 'Plot the data and the fitted error structure')
         toLoad_ttp = CreateToolTip(self.loadToButton, 'Loads regressed error structure values to Measurement Model tab and Custom Fitting Tab')

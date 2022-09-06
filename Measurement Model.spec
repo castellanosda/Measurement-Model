@@ -8,7 +8,7 @@ a = Analysis(
     ['mm.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('img/*', 'img')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -48,10 +48,4 @@ coll = COLLECT(
     upx=True,
     upx_exclude=[],
     name='Measurement Model',
-)
-app = BUNDLE(
-    coll,
-    name='Measurement Model.app',
-    icon='elephant.ico',
-    bundle_identifier=None,
 )

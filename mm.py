@@ -20,6 +20,7 @@ Created on Wed Jul 25 15:47:07 2018
 """
 
 #---Import necessary libraries/modules---
+from queue import Empty
 import sys, os, re, multiprocessing, webbrowser, configparser
 import tkinter as tk
 import tkinter.ttk as ttk
@@ -433,14 +434,17 @@ class myGUI:
             config.read(os.getenv('LOCALAPPDATA')+r"\MeasurementModel\settings.ini")
         except:
             config.read("/Library/Application Support/Measurement Model/settings.ini")
-        
-        #---Check the theme---
-        if (config['settings']['theme'] == 'light'):
-            self.theme = "light"
-        elif (config['settings']['theme'] == 'dark'):
-            self.theme = "dark"
-        else:
-            pass #raise Exception     #If not light or dark, that's bad
+            
+        try:
+            #---Check the theme---
+            if (config['settings']['theme'] == 'light'):
+                self.theme = "light"
+            elif (config['settings']['theme'] == 'dark'):
+                self.theme = "dark"
+            else:
+                pass #raise Exception     #If not light or dark, that's bad
+        except:
+            return
         
         #---Check the color/appearance---
         if (re.search(r'^#(?:[0-9a-fA-F]{3}){1,2}$', config['settings']['bar'])):   #Check if the default color is a hex value

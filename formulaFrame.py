@@ -23,7 +23,7 @@ import tkinter as tk
 import tkinter.font as tkfont
 from tkinter import messagebox
 import tkinter.ttk as ttk
-from tkinter.filedialog import askopenfile, askopenfilename, asksaveasfile, askdirectory
+from tkinter.filedialog import askopenfilename, askopenfilename, asksaveasfile, askdirectory
 from tkinter import simpledialog
 import os, sys, threading, queue, re, webbrowser, base64
 from xml.etree.ElementTree import PI
@@ -2202,30 +2202,32 @@ class fF(tk.Frame):
             self.errorDeltaVariable.set(0.1)
 
             #Prompt for errstrct file to be opened
-            errstrct_file = askopenfile(mode='r', filetypes=[('Error Structure Files','*.errstrct')]).readlines()
+            errstrct_filename = askopenfilename(filetypes=[('Error Structure Files','*.errstrct')])
             #if opened successfully
-            if errstrct_file is not None:
-                #checks possible lines for error structure parameters
-                for i in range(5,9):
-                    line = errstrct_file[i].split('\t')
-                    if line[0] == '\n':
-                        break
-                    elif line[0] == '\u03B1':
-                        self.errorAlphaCheckboxVariable.set(1)
-                        self.errorAlphaEntry.configure(state='normal')
-                        self.errorAlphaVariable.set(float(line[1]))
-                    elif line[0] == '\u03B2':
-                        self.errorBetaCheckboxVariable.set(1)
-                        self.errorBetaEntry.configure(state='normal')
-                        self.errorBetaVariable.set(float(line[1]))
-                    elif line[0] == '\u03B3':
-                        self.errorGammaCheckboxVariable.set(1)
-                        self.errorGammaEntry.configure(state='normal')
-                        self.errorGammaVariable.set(float(line[1]))
-                    elif line[0] == '\u03B4':
-                        self.errorDeltaCheckboxVariable.set(1)
-                        self.errorDeltaEntry.configure(state='normal')
-                        self.errorDeltaVariable.set(float(line[1]))
+            with open(errstrct_filename, "r", encoding="utf-8") as errstrct_file:
+                if errstrct_file is not None:
+                    #checks possible lines for error structure parameters
+                    lines = errstrct_file.readlines()
+                    for i in range(5,9):
+                        line = lines[i].split('\t')
+                        if line[0] == '\n':
+                            break
+                        elif line[0] == '\u03B1':
+                            self.errorAlphaCheckboxVariable.set(1)
+                            self.errorAlphaEntry.configure(state='normal')
+                            self.errorAlphaVariable.set(float(line[1]))
+                        elif line[0] == '\u03B2':
+                            self.errorBetaCheckboxVariable.set(1)
+                            self.errorBetaEntry.configure(state='normal')
+                            self.errorBetaVariable.set(float(line[1]))
+                        elif line[0] == '\u03B3':
+                            self.errorGammaCheckboxVariable.set(1)
+                            self.errorGammaEntry.configure(state='normal')
+                            self.errorGammaVariable.set(float(line[1]))
+                        elif line[0] == '\u03B4':
+                            self.errorDeltaCheckboxVariable.set(1)
+                            self.errorDeltaEntry.configure(state='normal')
+                            self.errorDeltaVariable.set(float(line[1]))
             return
         
         def importDirectoryBrowse():

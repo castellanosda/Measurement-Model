@@ -24,6 +24,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfile
 from tkinter import messagebox
 import numpy as np
 import pyperclip
+import codecs
 #--------------------------------pyperclip-----------------------------------
 #     Source: https://pypi.org/project/pyperclip/
 #     Email: al@inventwithpython.com
@@ -357,10 +358,10 @@ class iF(tk.Frame):
                             data_to_return += "\n"
                         return name, data_to_return #temp
                     else:
-                        with open(name,'r') as UseFile:
-                            return name, UseFile.read().decode("utf8")
+                        with open(name,'r', encoding="cp1252") as UseFile:
+                            return name, UseFile.read()
                 except Exception:     #If there's a problem with the file
-                    messagebox.showerror("File error", "Error 5:\nThere was an error opening the file.")
+                    messagebox.showerror("File error", "Error 5555:\nThere was an error opening the file.")
                     return "+", "+"   
         
         def browse():
