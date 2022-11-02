@@ -17,7 +17,7 @@ a = Analysis(
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
-    noarchive=False,
+    noarchive=False
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
@@ -37,6 +37,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon="elephant.ico"
 )
 coll = COLLECT(
     exe,
@@ -51,6 +52,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='Measurement Model.app',
-    icon='elephant.ico',
+    icon='elephant.icns',
     bundle_identifier=None,
 )
