@@ -29,12 +29,10 @@ import mmFittingCap
 import autoFitter
 import numpy as np
 import threading
-try:
-    if ('darwin' or 'linux') not in sys.platform:       #Makes the program sharper on Windows
-            import ctypes
-            import comtypes.client as cc
-except Exception:
-        pass
+import sys
+if ('darwin' or 'linux') not in sys.platform:       #Makes the program sharper on Windows
+        import ctypes
+        import comtypes.client as cc
 import queue
 import pyperclip
 #--------------------------------pyperclip-----------------------------------
@@ -44,7 +42,6 @@ import pyperclip
 #     License: BSD
 #----------------------------------------------------------------------------
 import os.path
-import sys
 import os
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
