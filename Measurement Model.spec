@@ -37,7 +37,6 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon='elephant.ico',
 )
 coll = COLLECT(
     exe,
@@ -48,4 +47,10 @@ coll = COLLECT(
     upx=True,
     upx_exclude=[],
     name='Measurement Model',
+)
+app = BUNDLE(
+    coll,
+    name='Measurement Model.app',
+    icon='elephant.ico',
+    bundle_identifier=None,
 )

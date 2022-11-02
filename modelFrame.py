@@ -98,12 +98,14 @@ class ThreadedTaskAuto(threading.Thread):
             if thread is self: 
                 return id  
     def terminate(self):
-        self.fittingObject.terminateProcesses()
-        # From https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
-        thread_id = self.get_id() 
-        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
-        if res > 1: 
-            ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0) 
+        if ('darwin' or 'linux') not in sys.platform:
+            self.fittingObject.terminateProcesses()
+            # From https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
+            thread_id = self.get_id() 
+            res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
+            if res > 1: 
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0) 
+        return
         
 #---Calls the fitting module; threaded to prevent the GUI from freezing---
 class ThreadedTask(threading.Thread):
@@ -146,12 +148,14 @@ class ThreadedTask(threading.Thread):
                 return id
     
     def terminate(self):
-        self.fittingObject.terminateProcesses()
-        # From https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
-        thread_id = self.get_id() 
-        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
-        if res > 1: 
-            ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0) 
+        if ('darwin' or 'linux') not in sys.platform:
+            self.fittingObject.terminateProcesses()
+            # From https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
+            thread_id = self.get_id() 
+            res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
+            if res > 1: 
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0) 
+        return
 
 class ThreadedTaskCap(threading.Thread):
     def __init__(self, queue, w, r, j, nVE, nMC, c, an, rm, fT, bL, g, cnst, bU, per, errA, errB, errBRe, errG, errD, cG, bLC, bUC, fC):
@@ -198,12 +202,14 @@ class ThreadedTaskCap(threading.Thread):
                 return id
     
     def terminate(self):
-        self.fittingObjectCap.terminateProcesses()
-        # From https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
-        thread_id = self.get_id() 
-        res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
-        if res > 1: 
-            ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0) 
+        if ('darwin' or 'linux') not in sys.platform:
+            self.fittingObjectCap.terminateProcesses()
+            # From https://www.geeksforgeeks.org/python-different-ways-to-kill-a-thread/
+            thread_id = self.get_id() 
+            res = ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, ctypes.py_object(SystemExit))
+            if res > 1: 
+                ctypes.pythonapi.PyThreadState_SetAsyncExc(thread_id, 0) 
+        return
 
 class CreateToolTip(object):
     """

@@ -361,7 +361,7 @@ class iF(tk.Frame):
                         with open(name,'r', encoding="cp1252") as UseFile:
                             return name, UseFile.read()
                 except Exception:     #If there's a problem with the file
-                    messagebox.showerror("File error", "Error 5555:\nThere was an error opening the file.")
+                    messagebox.showerror("File error", "Error 5:\nThere was an error opening the file.")
                     return "+", "+"   
         
         def browse():
